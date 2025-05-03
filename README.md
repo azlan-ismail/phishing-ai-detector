@@ -4,7 +4,7 @@ This repository contains materials for a hands-on training on phishing detection
 
 ---
 
-## 📁 Folder Structure (Updated)
+## 📁 Folder Structure
 
 ```
 phishing-detection-hands-on/
