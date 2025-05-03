@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing Detection Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        label { font-weight: bold; }
+        select { margin-bottom: 15px; width: 300px; padding: 5px; }
+        .form-section { margin-bottom: 25px; }
+        .predict-btn { padding: 10px 20px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h2>Phishing Detection - Input Form</h2>
+    <form action="/predict_form" method="post">
+        <div class="form-section">
+            <label>Select Model:</label><br>
+            <select name="model_choice">
+                <option value="best">Best Model</option>
+                <option value="xgb">XGBoost</option>
+                <option value="rf">Random Forest</option>
+                <option value="lr">Logistic Regression</option>
+            </select>
+        </div>
+        <div class="form-section">
+            <label>Feature Inputs:</label><br>
+            {% for feature in features %}
+                <label>{{ feature }}</label><br>
+                <select name="{{ feature }}">
+                    <option value="-1">-1 (Suspicious / Malicious)</option>
+                    <option value="0">0 (Neutral / Uncertain)</option>
+                    <option value="1">1 (Legitimate / Safe)</option>
+                </select><br>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Predict" class="predict-btn">
+    </form>
+</body>
+</html>
