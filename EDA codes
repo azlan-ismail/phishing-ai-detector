@@ -1,0 +1,40 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import zscore
+
+# Pairplot for top correlated features (excluding Label itself)
+import seaborn as sns
+import matplotlib.pyplot as plt
+top_features = df.corr()['Label'].abs().sort_values(ascending=False).index[1:5].tolist()
+sns.pairplot(df[top_features + ['Label']], hue='Label')
+plt.suptitle("Pairplot of Top Features vs Label", y=1.02)
+plt.show()
+
+# Bar plot for a discrete feature (e.g., having_IP_Address)
+sns.countplot(x='having_IP_Address', hue='Label', data=df)
+plt.title("Distribution of having_IP_Address by Label")
+plt.show()
+
+# Outlier detection using Z-score
+from scipy.stats import zscore
+z_scores = df.select_dtypes(include='number').apply(zscore)
+outliers = (z_scores.abs() > 3).sum().sort_values(ascending=False)
+print("\nOutlier counts per feature:")
+print(outliers)
+
+# Duplicate check
+duplicate_count = df.duplicated().sum()
+print(f"\nNumber of duplicate rows: {duplicate_count}")
+
+# Feature summary table
+summary = pd.DataFrame({
+    'Type': df.dtypes,
+    '% Missing': df.isnull().mean() * 100,
+    'Unique Values': df.nunique(),
+    'Min': df.min(numeric_only=True),
+    'Max': df.max(numeric_only=True),
+    'Correlation with Label': df.corr()['Label']
+})
+print("\nFeature Summary Table:")
+display(summary.round(2))
